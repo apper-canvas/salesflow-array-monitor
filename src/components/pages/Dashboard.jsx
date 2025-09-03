@@ -125,8 +125,8 @@ const Dashboard = () => {
   if (loading) return <Loading />;
   if (error) return <Error message={error} onRetry={loadDashboardData} />;
 
-  return (
-    <Layout title="Dashboard">
+return (
+    <Layout title="Dashboard" showQuickAdd={true}>
       <div className="space-y-6">
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">

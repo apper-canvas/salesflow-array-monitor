@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Sidebar from "@/components/organisms/Sidebar";
 import Header from "@/components/organisms/Header";
 
-const Layout = ({ children, title, showSearch = true, onSearch, headerActions }) => {
+const Layout = ({ children, title, showSearch = true, onSearch, headerActions, showQuickAdd = false }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleMobileMenuToggle = () => {
@@ -26,7 +26,8 @@ const Layout = ({ children, title, showSearch = true, onSearch, headerActions })
           title={title}
           showSearch={showSearch}
           onSearch={onSearch}
-          actions={headerActions}
+actions={headerActions}
+          showQuickAdd={showQuickAdd}
         />
         
         <main className="flex-1 relative overflow-y-auto focus:outline-none">

@@ -3,7 +3,7 @@ import ApperIcon from "@/components/ApperIcon";
 import Button from "@/components/atoms/Button";
 import SearchBar from "@/components/molecules/SearchBar";
 
-const Header = ({ onMobileMenuClick, title, showSearch = true, onSearch, actions }) => {
+const Header = ({ onMobileMenuClick, title, showSearch = true, onSearch, actions, showQuickAdd = false }) => {
   return (
     <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-30">
       <div className="px-4 sm:px-6 lg:px-8">
@@ -46,9 +46,11 @@ const Header = ({ onMobileMenuClick, title, showSearch = true, onSearch, actions
               </button>
               
               {/* Quick add */}
-              <Button size="sm" icon="Plus">
-                <span className="hidden sm:inline">Quick Add</span>
-              </Button>
+{showQuickAdd && (
+                <Button size="sm" icon="Plus">
+                  <span className="hidden sm:inline">Quick Add</span>
+                </Button>
+              )}
             </div>
           </div>
         </div>
