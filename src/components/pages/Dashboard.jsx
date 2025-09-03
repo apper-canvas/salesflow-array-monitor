@@ -10,15 +10,19 @@ import { contactService } from "@/services/api/contactService";
 import { dealService } from "@/services/api/dealService";
 import { leadService } from "@/services/api/leadService";
 import { activityService } from "@/services/api/activityService";
-import { format, isThisMonth, parseISO } from "date-fns";
+import { taskService } from "@/services/api/taskService";
+import { format, isThisMonth, parseISO, isBefore } from "date-fns";
 import Chart from "react-apexcharts";
 
 const Dashboard = () => {
-  const [metrics, setMetrics] = useState({
+const [metrics, setMetrics] = useState({
     totalContacts: 0,
     activeDeals: 0,
     pipelineValue: 0,
-    monthlyDeals: 0
+    monthlyDeals: 0,
+    totalTasks: 0,
+    overdueTasks: 0,
+    completedTasks: 0
   });
   const [activities, setActivities] = useState([]);
   const [pipelineData, setPipelineData] = useState({
@@ -28,16 +32,17 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const loadDashboardData = async () => {
+const loadDashboardData = async () => {
     try {
       setError("");
       setLoading(true);
       
-      const [contacts, deals, leads, activitiesData] = await Promise.all([
+      const [contacts, deals, leads, activitiesData, tasks] = await Promise.all([
         contactService.getAll(),
         dealService.getAll(),
         leadService.getAll(),
-        activityService.getAll()
+        activityService.getAll(),
+        taskService.getAll()
       ]);
 
       // Calculate metrics
@@ -55,8 +60,38 @@ const Dashboard = () => {
         monthlyDeals
       });
 
-      setActivities(activitiesData.slice(0, 5));
+// Calculate task metrics
+      const totalTasks = tasks.length;
+      const overdueTasks = tasks.filter(task => 
+        task.status !== 'completed' && 
+        task.dueDate && 
+        isBefore(new Date(task.dueDate), new Date())
+      ).length;
+      const completedTasks = tasks.filter(task => task.status === 'completed').length;
 
+      setMetrics(prevMetrics => ({
+        ...prevMetrics,
+        totalTasks,
+        overdueTasks,
+        completedTasks
+      }));
+
+      // Combine activities with recent task activities
+      const taskActivities = tasks
+        .filter(task => task.status === 'completed')
+        .slice(0, 2)
+        .map(task => ({
+          Id: `task-${task.Id}`,
+          type: 'task',
+          description: `Task completed: ${task.title}`,
+          createdAt: task.updatedAt || task.createdAt
+        }));
+
+      const allActivities = [...activitiesData, ...taskActivities]
+        .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        .slice(0, 5);
+
+      setActivities(allActivities);
       // Pipeline chart data
       const stageGroups = deals.reduce((acc, deal) => {
         acc[deal.stage] = (acc[deal.stage] || 0) + 1;
@@ -117,7 +152,8 @@ const Dashboard = () => {
       email: "Mail",
       meeting: "Calendar",
       note: "FileText",
-      task: "CheckSquare"
+task: "CheckSquare",
+      completed: "CheckCircle"
     };
     return icons[type] || "Activity";
   };
@@ -126,7 +162,7 @@ const Dashboard = () => {
   if (error) return <Error message={error} onRetry={loadDashboardData} />;
 
 return (
-    <Layout title="Dashboard" showQuickAdd={true}>
+<Layout title="Dashboard" showQuickAdd={true}>
       <div className="space-y-6">
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -161,6 +197,38 @@ return (
             trend="up"
             trendValue="+5%"
             gradient={true}
+          />
+        </div>
+
+{/* Second Row: Tasks Overview */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
+          <MetricCard
+            title="Total Tasks"
+            value={metrics.totalTasks}
+            icon="CheckSquare"
+            trend={null}
+            color="primary"
+          />
+          <MetricCard
+            title="Overdue Tasks"
+            value={metrics.overdueTasks}
+            icon="AlertTriangle"
+            trend={null}
+            color="danger"
+          />
+          <MetricCard
+            title="Completed"
+            value={metrics.completedTasks}
+            icon="CheckCircle"
+            trend={metrics.totalTasks > 0 ? `${Math.round((metrics.completedTasks / metrics.totalTasks) * 100)}%` : '0%'}
+            color="success"
+          />
+          <MetricCard
+            title="In Progress"
+            value={metrics.totalTasks - metrics.completedTasks}
+            icon="Clock"
+            trend={null}
+            color="secondary"
           />
         </div>
 

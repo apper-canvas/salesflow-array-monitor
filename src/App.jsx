@@ -14,7 +14,7 @@ import Contacts from "@/components/pages/Contacts";
 import Leads from "@/components/pages/Leads";
 import Pipeline from "@/components/pages/Pipeline";
 import Deals from "@/components/pages/Deals";
-
+import Tasks from "@/components/pages/Tasks";
 export const AuthContext = createContext(null);
 
 function App() {
@@ -110,7 +110,7 @@ function App() {
   return (
     <AuthContext.Provider value={authMethods}>
       <div className="App">
-        <Routes>
+<Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/callback" element={<Callback />} />
@@ -122,6 +122,7 @@ function App() {
           <Route path="/leads" element={<Leads />} />
           <Route path="/pipeline" element={<Pipeline />} />
           <Route path="/deals" element={<Deals />} />
+          <Route path="/tasks" element={<Tasks />} />
         </Routes>
         
         <ToastContainer

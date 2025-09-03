@@ -9,6 +9,7 @@ const navigation = [
   { name: "Leads", href: "/leads", icon: "UserPlus" },
   { name: "Pipeline", href: "/pipeline", icon: "BarChart3" },
   { name: "Deals", href: "/deals", icon: "DollarSign" },
+  { name: "Tasks", href: "/tasks", icon: "CheckSquare" },
 ];
 
 const Sidebar = ({ isMobileOpen, onMobileClose }) => {

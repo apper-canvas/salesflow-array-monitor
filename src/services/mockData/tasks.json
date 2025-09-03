@@ -1,0 +1,167 @@
+[
+  {
+    "Id": 1,
+    "title": "Update CRM Dashboard Design",
+    "description": "Redesign the main dashboard with new metrics cards and improved user experience",
+    "priority": "high",
+    "status": "in-progress",
+    "assignedTo": "Sarah Chen",
+    "dueDate": "2024-01-15",
+    "createdAt": "2024-01-08T09:00:00Z",
+    "updatedAt": "2024-01-10T14:30:00Z"
+  },
+  {
+    "Id": 2,
+    "title": "Implement Task Management System",
+    "description": "Build a comprehensive task management module with priority levels and due date tracking",
+    "priority": "high",
+    "status": "pending",
+    "assignedTo": "Alex Rodriguez",
+    "dueDate": "2024-01-20",
+    "createdAt": "2024-01-09T10:15:00Z",
+    "updatedAt": "2024-01-09T10:15:00Z"
+  },
+  {
+    "Id": 3,
+    "title": "Fix Contact Import Bug",
+    "description": "Resolve issue where CSV import fails for contacts with special characters in names",
+    "priority": "medium",
+    "status": "completed",
+    "assignedTo": "Mike Johnson",
+    "dueDate": "2024-01-12",
+    "createdAt": "2024-01-05T13:45:00Z",
+    "updatedAt": "2024-01-11T16:20:00Z"
+  },
+  {
+    "Id": 4,
+    "title": "Prepare Q1 Sales Report",
+    "description": "Compile quarterly sales data and create presentation for stakeholders",
+    "priority": "medium",
+    "status": "in-progress",
+    "assignedTo": "Jennifer Liu",
+    "dueDate": "2024-01-25",
+    "createdAt": "2024-01-07T11:30:00Z",
+    "updatedAt": "2024-01-12T09:45:00Z"
+  },
+  {
+    "Id": 5,
+    "title": "Client Onboarding Documentation",
+    "description": "Create comprehensive documentation for new client onboarding process",
+    "priority": "low",
+    "status": "pending",
+    "assignedTo": "David Park",
+    "dueDate": "2024-02-01",
+    "createdAt": "2024-01-10T08:00:00Z",
+    "updatedAt": "2024-01-10T08:00:00Z"
+  },
+  {
+    "Id": 6,
+    "title": "Database Performance Optimization",
+    "description": "Optimize database queries and indexes to improve application response time",
+    "priority": "high",
+    "status": "pending",
+    "assignedTo": "Sarah Chen",
+    "dueDate": "2024-01-18",
+    "createdAt": "2024-01-08T15:20:00Z",
+    "updatedAt": "2024-01-08T15:20:00Z"
+  },
+  {
+    "Id": 7,
+    "title": "Update User Authentication",
+    "description": "Implement two-factor authentication and improve password security policies",
+    "priority": "medium",
+    "status": "completed",
+    "assignedTo": "Alex Rodriguez",
+    "dueDate": "2024-01-10",
+    "createdAt": "2024-01-03T12:00:00Z",
+    "updatedAt": "2024-01-09T17:30:00Z"
+  },
+  {
+    "Id": 8,
+    "title": "Mobile App Testing",
+    "description": "Conduct thorough testing of mobile application across different devices and platforms",
+    "priority": "medium",
+    "status": "in-progress",
+    "assignedTo": "Mike Johnson",
+    "dueDate": "2024-01-22",
+    "createdAt": "2024-01-11T14:10:00Z",
+    "updatedAt": "2024-01-13T10:15:00Z"
+  },
+  {
+    "Id": 9,
+    "title": "Customer Feedback Analysis",
+    "description": "Analyze recent customer feedback and identify areas for product improvement",
+    "priority": "low",
+    "status": "pending",
+    "assignedTo": "Jennifer Liu",
+    "dueDate": "2024-01-30",
+    "createdAt": "2024-01-12T16:45:00Z",
+    "updatedAt": "2024-01-12T16:45:00Z"
+  },
+  {
+    "Id": 10,
+    "title": "API Documentation Update",
+    "description": "Update API documentation with new endpoints and improved examples",
+    "priority": "low",
+    "status": "overdue",
+    "assignedTo": "David Park",
+    "dueDate": "2024-01-05",
+    "createdAt": "2024-01-02T09:30:00Z",
+    "updatedAt": "2024-01-02T09:30:00Z"
+  },
+  {
+    "Id": 11,
+    "title": "Email Campaign Setup",
+    "description": "Set up automated email campaigns for new lead nurturing",
+    "priority": "medium",
+    "status": "completed",
+    "assignedTo": "Jennifer Liu",
+    "dueDate": "2024-01-08",
+    "createdAt": "2024-01-01T10:00:00Z",
+    "updatedAt": "2024-01-07T15:45:00Z"
+  },
+  {
+    "Id": 12,
+    "title": "Security Audit",
+    "description": "Conduct comprehensive security audit of the application infrastructure",
+    "priority": "high",
+    "status": "in-progress",
+    "assignedTo": "Alex Rodriguez",
+    "dueDate": "2024-01-28",
+    "createdAt": "2024-01-14T11:20:00Z",
+    "updatedAt": "2024-01-14T11:20:00Z"
+  },
+  {
+    "Id": 13,
+    "title": "Team Training Session",
+    "description": "Organize training session on new CRM features for the sales team",
+    "priority": "medium",
+    "status": "pending",
+    "assignedTo": "Mike Johnson",
+    "dueDate": "2024-01-26",
+    "createdAt": "2024-01-13T13:15:00Z",
+    "updatedAt": "2024-01-13T13:15:00Z"
+  },
+  {
+    "Id": 14,
+    "title": "Backup System Maintenance",
+    "description": "Perform routine maintenance on backup systems and verify data integrity",
+    "priority": "low",
+    "status": "overdue",
+    "assignedTo": "David Park",
+    "dueDate": "2024-01-06",
+    "createdAt": "2024-01-04T14:00:00Z",
+    "updatedAt": "2024-01-04T14:00:00Z"
+  },
+  {
+    "Id": 15,
+    "title": "Lead Scoring Algorithm",
+    "description": "Develop and implement improved lead scoring algorithm based on customer behavior",
+    "priority": "high",
+    "status": "pending",
+    "assignedTo": "Sarah Chen",
+    "dueDate": "2024-02-05",
+    "createdAt": "2024-01-15T08:45:00Z",
+    "updatedAt": "2024-01-15T08:45:00Z"
+  }
+]
