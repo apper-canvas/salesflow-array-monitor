@@ -1,0 +1,47 @@
+[
+  {
+    "Id": 1,
+    "contactId": 1,
+    "status": "qualified",
+    "score": 85,
+    "source": "Website Demo Request",
+    "assignedTo": "Sales Manager",
+    "createdAt": "2024-02-10T14:20:00Z"
+  },
+  {
+    "Id": 2,
+    "contactId": 2,
+    "status": "contacted",
+    "score": 72,
+    "source": "Referral Program",
+    "assignedTo": "Sales Manager",
+    "createdAt": "2024-02-08T09:45:00Z"
+  },
+  {
+    "Id": 3,
+    "contactId": 4,
+    "status": "new",
+    "score": 90,
+    "source": "Trade Show",
+    "assignedTo": "Sales Manager",
+    "createdAt": "2024-02-12T15:10:00Z"
+  },
+  {
+    "Id": 4,
+    "contactId": 6,
+    "status": "qualified",
+    "score": 68,
+    "source": "Content Download",
+    "assignedTo": "Sales Manager",
+    "createdAt": "2024-02-09T10:00:00Z"
+  },
+  {
+    "Id": 5,
+    "contactId": 3,
+    "status": "contacted",
+    "score": 75,
+    "source": "Cold Outreach",
+    "assignedTo": "Sales Manager",
+    "createdAt": "2024-02-05T11:30:00Z"
+  }
+]

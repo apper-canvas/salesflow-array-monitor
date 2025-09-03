@@ -1,0 +1,42 @@
+[
+  {
+    "Id": 1,
+    "type": "call",
+    "entityId": 1,
+    "entityType": "contact",
+    "description": "Follow-up call regarding enterprise license requirements",
+    "createdAt": "2024-02-12T14:30:00Z"
+  },
+  {
+    "Id": 2,
+    "type": "email",
+    "entityId": 2,
+    "entityType": "deal",
+    "description": "Sent pricing proposal for startup package",
+    "createdAt": "2024-02-12T10:15:00Z"
+  },
+  {
+    "Id": 3,
+    "type": "meeting",
+    "entityId": 4,
+    "entityType": "deal",
+    "description": "Demo session scheduled for compliance solution",
+    "createdAt": "2024-02-11T16:45:00Z"
+  },
+  {
+    "Id": 4,
+    "type": "note",
+    "entityId": 3,
+    "entityType": "contact",
+    "description": "Updated technical requirements based on client feedback",
+    "createdAt": "2024-02-11T09:20:00Z"
+  },
+  {
+    "Id": 5,
+    "type": "task",
+    "entityId": 5,
+    "entityType": "deal",
+    "description": "Prepare ROI analysis for retail implementation",
+    "createdAt": "2024-02-10T13:00:00Z"
+  }
+]
