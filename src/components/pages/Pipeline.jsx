@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Layout from "@/components/organisms/Layout";
-import PipelineBoard from "@/components/organisms/PipelineBoard";
-import DealModal from "@/components/organisms/DealModal";
 import Button from "@/components/atoms/Button";
+import ApperIcon from "@/components/ApperIcon";
+import { Card, CardContent } from "@/components/atoms/Card";
 
 const Pipeline = () => {
   const [selectedDeal, setSelectedDeal] = useState(null);
@@ -51,18 +51,24 @@ const Pipeline = () => {
           </div>
         </div>
 
-        <PipelineBoard
-          key={refreshKey}
-          onDealSelect={handleDealSelect}
-          onAddDeal={handleAddDeal}
-        />
-
-        <DealModal
-          isOpen={isModalOpen}
-          onClose={handleModalClose}
-          deal={selectedDeal}
-          onSave={handleDealSave}
-        />
+<Card className="p-12">
+          <CardContent className="text-center">
+            <div className="flex flex-col items-center space-y-4">
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center">
+                <ApperIcon name="Archive" className="h-8 w-8 text-gray-400" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  Pipeline Feature Removed
+                </h3>
+                <p className="text-gray-600 max-w-md">
+                  The deals pipeline functionality has been removed from the application. 
+                  Please use the Contacts and Leads sections to manage your customer relationships.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </Layout>
   );

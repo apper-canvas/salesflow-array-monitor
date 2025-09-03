@@ -7,7 +7,6 @@ import Dashboard from "@/components/pages/Dashboard";
 import Contacts from "@/components/pages/Contacts";
 import Leads from "@/components/pages/Leads";
 import Pipeline from "@/components/pages/Pipeline";
-import Deals from "@/components/pages/Deals";
 
 const App = () => {
   return (
@@ -18,7 +17,6 @@ const App = () => {
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/leads" element={<Leads />} />
           <Route path="/pipeline" element={<Pipeline />} />
-          <Route path="/deals" element={<Deals />} />
         </Routes>
         
         <ToastContainer

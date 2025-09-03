@@ -7,7 +7,6 @@ import Badge from "@/components/atoms/Badge";
 import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
 import { contactService } from "@/services/api/contactService";
-import { dealService } from "@/services/api/dealService";
 import { leadService } from "@/services/api/leadService";
 import { activityService } from "@/services/api/activityService";
 import { format, isThisMonth, parseISO } from "date-fns";
@@ -33,20 +32,17 @@ const Dashboard = () => {
       setError("");
       setLoading(true);
       
-      const [contacts, deals, leads, activitiesData] = await Promise.all([
+const [contacts, leads, activitiesData] = await Promise.all([
         contactService.getAll(),
-        dealService.getAll(),
         leadService.getAll(),
         activityService.getAll()
       ]);
 
-      // Calculate metrics
+// Calculate metrics
       const totalContacts = contacts.length;
-      const activeDeals = deals.filter(deal => !["closed-won", "closed-lost"].includes(deal.stage)).length;
-      const pipelineValue = deals.reduce((sum, deal) => sum + (deal.value || 0), 0);
-      const monthlyDeals = deals.filter(deal => 
-        isThisMonth(parseISO(deal.expectedCloseDate))
-      ).length;
+      const activeDeals = 0; // Deals functionality removed
+      const pipelineValue = 0; // Deals functionality removed
+      const monthlyDeals = 0; // Deals functionality removed
 
       setMetrics({
         totalContacts,
@@ -57,37 +53,10 @@ const Dashboard = () => {
 
       setActivities(activitiesData.slice(0, 5));
 
-      // Pipeline chart data
-      const stageGroups = deals.reduce((acc, deal) => {
-        acc[deal.stage] = (acc[deal.stage] || 0) + 1;
-        return acc;
-      }, {});
-
+// Pipeline chart data - deals functionality removed
       const chartData = {
-        series: Object.values(stageGroups),
-        options: {
-          chart: {
-            type: "donut",
-            height: 350
-          },
-          labels: Object.keys(stageGroups).map(stage => 
-            stage.replace("-", " ").replace(/\b\w/g, l => l.toUpperCase())
-          ),
-          colors: ["#8B5CF6", "#10B981", "#F59E0B", "#EF4444", "#3B82F6"],
-          legend: {
-            position: "bottom"
-          },
-          plotOptions: {
-            pie: {
-              donut: {
-                size: "70%"
-              }
-            }
-          },
-          dataLabels: {
-            enabled: false
-          }
-        }
+        series: [],
+        options: {}
       };
 
       setPipelineData(chartData);
