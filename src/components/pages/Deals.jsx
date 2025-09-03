@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import Layout from "@/components/organisms/Layout";
-import PipelineBoard from "@/components/organisms/PipelineBoard";
+import DealTable from "@/components/organisms/DealTable";
 import DealModal from "@/components/organisms/DealModal";
 import Button from "@/components/atoms/Button";
 
-const Pipeline = () => {
+const Deals = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const [selectedDeal, setSelectedDeal] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
 
   const handleDealSelect = (deal) => {
     setSelectedDeal(deal);
@@ -37,22 +42,23 @@ const Pipeline = () => {
 
   return (
     <Layout
-      title="Sales Pipeline"
-      showSearch={false}
+      title="Deals"
+      onSearch={handleSearch}
       headerActions={headerActions}
     >
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Sales Pipeline</h2>
+            <h2 className="text-2xl font-bold text-gray-900">Deal Management</h2>
             <p className="text-gray-600">
-              Visualize and manage your deals through each stage of the sales process.
+              Track and manage your sales opportunities and revenue pipeline.
             </p>
           </div>
         </div>
 
-        <PipelineBoard
+        <DealTable
           key={refreshKey}
+          searchQuery={searchQuery}
           onDealSelect={handleDealSelect}
           onAddDeal={handleAddDeal}
         />
@@ -68,4 +74,4 @@ const Pipeline = () => {
   );
 };
 
-export default Pipeline;
+export default Deals;
