@@ -10,7 +10,7 @@ import { contactService } from "@/services/api/contactService";
 
 const DealModal = ({ isOpen, onClose, deal, onSave }) => {
   const [formData, setFormData] = useState({
-    contactId: "",
+contactId: "",
     title: "",
     value: "",
     stage: "prospect",
@@ -30,7 +30,7 @@ const DealModal = ({ isOpen, onClose, deal, onSave }) => {
   useEffect(() => {
     if (deal) {
       setFormData({
-        contactId: deal.contactId || "",
+contactId: deal.contactId || "",
         title: deal.title || "",
         value: deal.value || "",
         stage: deal.stage || "prospect",

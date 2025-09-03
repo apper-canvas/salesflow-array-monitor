@@ -75,7 +75,7 @@ const LeadBoard = ({ onLeadSelect, onAddLead }) => {
     }
 
     try {
-      const updatedLead = await leadService.update(draggedLead.Id, {
+const updatedLead = await leadService.update(draggedLead.Id, {
         ...draggedLead,
         status: newStatus
       });

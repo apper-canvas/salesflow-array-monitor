@@ -47,7 +47,7 @@ const PipelineBoard = ({ onDealSelect, onAddDeal }) => {
     loadData();
   }, []);
 
-  const getContactName = (contactId) => {
+const getContactName = (contactId) => {
     const contact = contacts.find(c => c.Id === contactId);
     return contact ? contact.name : "Unknown Contact";
   };
@@ -71,7 +71,7 @@ const PipelineBoard = ({ onDealSelect, onAddDeal }) => {
     }
 
     try {
-      const updatedDeal = await dealService.update(draggedDeal.Id, {
+const updatedDeal = await dealService.update(draggedDeal.Id, {
         ...draggedDeal,
         stage: newStage
       });

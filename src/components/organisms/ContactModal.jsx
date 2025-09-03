@@ -18,7 +18,7 @@ const ContactModal = ({ isOpen, onClose, contact, onSave }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (contact) {
+if (contact) {
       setFormData({
         name: contact.name || "",
         email: contact.email || "",

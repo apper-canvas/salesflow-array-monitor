@@ -27,7 +27,7 @@ const LeadModal = ({ isOpen, onClose, lead, onSave }) => {
 
   useEffect(() => {
     if (lead) {
-      setFormData({
+setFormData({
         contactId: lead.contactId || "",
         status: lead.status || "new",
         score: lead.score || 50,
