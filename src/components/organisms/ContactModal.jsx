@@ -1,20 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
-import Input from "@/components/atoms/Input";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/atoms/Card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
 import { contactService } from "@/services/api/contactService";
+import ApperIcon from "@/components/ApperIcon";
+import Input from "@/components/atoms/Input";
+import Button from "@/components/atoms/Button";
+import FileUpload from "@/components/molecules/FileUpload";
+import AttachmentList from "@/components/molecules/AttachmentList";
 
 const ContactModal = ({ isOpen, onClose, contact, onSave }) => {
   const [formData, setFormData] = useState({
-    name: "",
+name: "",
     email: "",
     phone: "",
     company: "",
     tags: "",
     notes: ""
   });
+  const [attachmentRefresh, setAttachmentRefresh] = useState(0);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -45,7 +48,7 @@ if (contact) {
 
     try {
       const contactData = {
-        ...formData,
+...formData,
         tags: formData.tags ? formData.tags.split(",").map(tag => tag.trim()).filter(Boolean) : []
       };
 
@@ -67,9 +70,13 @@ if (contact) {
     }
   };
 
-  const handleChange = (e) => {
+const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleAttachmentUpload = () => {
+    setAttachmentRefresh(prev => prev + 1);
   };
 
   if (!isOpen) return null;
@@ -160,6 +167,27 @@ if (contact) {
                     placeholder="Enter any additional notes..."
                   />
                 </div>
+{/* File Attachments Section */}
+                <div className="space-y-4 pt-6 border-t">
+                  <div className="flex items-center gap-2">
+                    <ApperIcon name="Paperclip" className="h-5 w-5 text-gray-600" />
+                    <h4 className="font-medium text-gray-900">Attachments</h4>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <FileUpload 
+                      entityType="contact"
+                      entityId={contact?.Id}
+                      onUploadComplete={handleAttachmentUpload}
+                    />
+                    <AttachmentList 
+                      entityType="contact"
+                      entityId={contact?.Id}
+                      refreshTrigger={attachmentRefresh}
+                    />
+                  </div>
+                </div>
+
               </CardContent>
 
               <div className="bg-gray-50 px-6 py-4 flex items-center justify-end space-x-3 border-t">

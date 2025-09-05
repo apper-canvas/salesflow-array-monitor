@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import ApperIcon from "@/components/ApperIcon";
-import Button from "@/components/atoms/Button";
-import Input from "@/components/atoms/Input";
-import Select from "@/components/atoms/Select";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/atoms/Card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
 import { dealService } from "@/services/api/dealService";
 import { contactService } from "@/services/api/contactService";
+import ApperIcon from "@/components/ApperIcon";
+import Input from "@/components/atoms/Input";
+import Select from "@/components/atoms/Select";
+import Button from "@/components/atoms/Button";
+import FileUpload from "@/components/molecules/FileUpload";
+import AttachmentList from "@/components/molecules/AttachmentList";
 
 const DealModal = ({ isOpen, onClose, deal, onSave }) => {
   const [formData, setFormData] = useState({
@@ -18,6 +20,7 @@ contactId: "",
     expectedCloseDate: "",
     assignedTo: "Sales Manager"
   });
+  const [attachmentRefresh, setAttachmentRefresh] = useState(0);
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -65,7 +68,7 @@ contactId: deal.contactId || "",
     setLoading(true);
 
     try {
-      const dealData = {
+const dealData = {
         ...formData,
         value: parseFloat(formData.value),
         probability: parseInt(formData.probability)
@@ -89,9 +92,13 @@ contactId: deal.contactId || "",
     }
   };
 
-  const handleChange = (e) => {
+const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleAttachmentUpload = () => {
+    setAttachmentRefresh(prev => prev + 1);
   };
 
   if (!isOpen) return null;
@@ -204,6 +211,27 @@ contactId: deal.contactId || "",
                   onChange={handleChange}
                   placeholder="Enter assignee name"
                 />
+{/* File Attachments Section */}
+                <div className="space-y-4 pt-6 border-t">
+                  <div className="flex items-center gap-2">
+                    <ApperIcon name="Paperclip" className="h-5 w-5 text-gray-600" />
+                    <h4 className="font-medium text-gray-900">Attachments</h4>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <FileUpload 
+                      entityType="deal"
+                      entityId={deal?.Id}
+                      onUploadComplete={handleAttachmentUpload}
+                    />
+                    <AttachmentList 
+                      entityType="deal"
+                      entityId={deal?.Id}
+                      refreshTrigger={attachmentRefresh}
+                    />
+                  </div>
+                </div>
+
               </CardContent>
 
               <div className="bg-gray-50 px-6 py-4 flex items-center justify-end space-x-3 border-t">
