@@ -26,24 +26,24 @@ const TaskModal = ({ isOpen, onClose, task, onSave }) => {
     "David Park"
   ];
 
-  useEffect(() => {
+useEffect(() => {
     if (task) {
       setFormData({
-        title: task.title || "",
-        description: task.description || "",
-        priority: task.priority || "medium",
-        status: task.status || "pending",
-        assignedTo: task.assignedTo || "",
-        dueDate: task.dueDate ? task.dueDate.split("T")[0] : ""
+        Name: task.Name || "",
+        description_c: task.description_c || "",
+        priority: "medium", // UI-only field
+        status_c: task.status_c || "Not Started",
+        assignedTo: task.related_to_contact_c?.Name || task.related_to_lead_c?.Name || task.related_to_deal_c?.Name || "",
+        due_date_c: task.due_date_c ? task.due_date_c.split("T")[0] : ""
       });
     } else {
       setFormData({
-        title: "",
-        description: "",
-        priority: "medium",
-        status: "pending",
+        Name: "",
+        description_c: "",
+        priority: "medium", // UI-only field
+        status_c: "Not Started",
         assignedTo: "",
-        dueDate: ""
+        due_date_c: ""
       });
     }
   }, [task]);
