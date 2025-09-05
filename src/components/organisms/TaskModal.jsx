@@ -6,34 +6,61 @@ import Input from "@/components/atoms/Input";
 import Select from "@/components/atoms/Select";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/atoms/Card";
 import { taskService } from "@/services/api/taskService";
-
+import { contactService } from "@/services/api/contactService";
+import { dealService } from "@/services/api/dealService";
+import { leadService } from "@/services/api/leadService";
 const TaskModal = ({ isOpen, onClose, task, onSave }) => {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
+const [formData, setFormData] = useState({
+    Name: "",
+    description_c: "",
     priority: "medium",
-    status: "pending",
-    assignedTo: "",
-    dueDate: ""
+    status_c: "Not Started",
+    related_to_contact_c: "",
+    related_to_lead_c: "",
+    related_to_deal_c: "",
+    due_date_c: ""
   });
   const [loading, setLoading] = useState(false);
-
-  const teamMembers = [
-    "Sarah Chen",
-    "Alex Rodriguez", 
-    "Mike Johnson",
-    "Jennifer Liu",
-    "David Park"
-  ];
+  const [contacts, setContacts] = useState([]);
+  const [deals, setDeals] = useState([]);
+  const [leads, setLeads] = useState([]);
+  const [loadingLookups, setLoadingLookups] = useState(true);
 
 useEffect(() => {
+    const loadLookupData = async () => {
+      try {
+        setLoadingLookups(true);
+        const [contactsData, dealsData, leadsData] = await Promise.all([
+          contactService.getAll(),
+          dealService.getAll(),
+          leadService.getAll()
+        ]);
+        setContacts(contactsData);
+        setDeals(dealsData);
+        setLeads(leadsData);
+      } catch (error) {
+        console.error("Error loading lookup data:", error);
+        toast.error("Failed to load related data");
+      } finally {
+        setLoadingLookups(false);
+      }
+    };
+
+    if (isOpen) {
+      loadLookupData();
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
     if (task) {
       setFormData({
         Name: task.Name || "",
         description_c: task.description_c || "",
         priority: "medium", // UI-only field
         status_c: task.status_c || "Not Started",
-        assignedTo: task.related_to_contact_c?.Name || task.related_to_lead_c?.Name || task.related_to_deal_c?.Name || "",
+        related_to_contact_c: task.related_to_contact_c?.Id || "",
+        related_to_lead_c: task.related_to_lead_c?.Id || "",
+        related_to_deal_c: task.related_to_deal_c?.Id || "",
         due_date_c: task.due_date_c ? task.due_date_c.split("T")[0] : ""
       });
     } else {
@@ -42,7 +69,9 @@ useEffect(() => {
         description_c: "",
         priority: "medium", // UI-only field
         status_c: "Not Started",
-        assignedTo: "",
+        related_to_contact_c: "",
+        related_to_lead_c: "",
+        related_to_deal_c: "",
         due_date_c: ""
       });
     }
@@ -104,10 +133,10 @@ useEffect(() => {
               </CardHeader>
 
               <CardContent className="p-6 space-y-4">
-                <Input
+<Input
                   label="Task Title"
-                  name="title"
-                  value={formData.title}
+                  name="Name"
+                  value={formData.Name}
                   onChange={handleChange}
                   required
                   placeholder="Enter task title"
@@ -117,9 +146,9 @@ useEffect(() => {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Description
                   </label>
-                  <textarea
-                    name="description"
-                    value={formData.description}
+<textarea
+                    name="description_c"
+                    value={formData.description_c}
                     onChange={handleChange}
                     rows={3}
                     className="flex w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200"
@@ -140,41 +169,78 @@ useEffect(() => {
                     <option value="high">High Priority</option>
                   </Select>
 
-                  <Select
+<Select
                     label="Status"
-                    name="status"
-                    value={formData.status}
+                    name="status_c"
+                    value={formData.status_c}
                     onChange={handleChange}
                     required
                   >
-                    <option value="pending">Pending</option>
-                    <option value="in-progress">In Progress</option>
-                    <option value="completed">Completed</option>
+                    <option value="Not Started">Not Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Deferred">Deferred</option>
                   </Select>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Select
-                    label="Assigned To"
-                    name="assignedTo"
-                    value={formData.assignedTo}
-                    onChange={handleChange}
-                  >
-                    <option value="">Select team member</option>
-                    {teamMembers.map(member => (
-                      <option key={member} value={member}>
-                        {member}
-                      </option>
-                    ))}
-                  </Select>
+<Input
+                  label="Due Date"
+                  name="due_date_c"
+                  type="date"
+                  value={formData.due_date_c}
+                  onChange={handleChange}
+                />
 
-                  <Input
-                    label="Due Date"
-                    name="dueDate"
-                    type="date"
-                    value={formData.dueDate}
-                    onChange={handleChange}
-                  />
+                {/* Lookup Fields Section */}
+                <div className="space-y-4">
+                  <h4 className="text-sm font-medium text-gray-700 border-b pb-2">Related Records</h4>
+                  
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <Select
+                      label="Related Contact"
+                      name="related_to_contact_c"
+                      value={formData.related_to_contact_c}
+                      onChange={handleChange}
+                      disabled={loadingLookups}
+                    >
+                      <option value="">Select Contact</option>
+                      {contacts.map(contact => (
+                        <option key={contact.Id} value={contact.Id}>
+                          {contact.name || contact.email || `Contact ${contact.Id}`}
+                        </option>
+                      ))}
+                    </Select>
+
+                    <Select
+                      label="Related Deal"
+                      name="related_to_deal_c"
+                      value={formData.related_to_deal_c}
+                      onChange={handleChange}
+                      disabled={loadingLookups}
+                    >
+                      <option value="">Select Deal</option>
+                      {deals.map(deal => (
+                        <option key={deal.Id} value={deal.Id}>
+                          {deal.title || `Deal ${deal.Id}`} - ${deal.value ? `$${deal.value.toLocaleString()}` : 'No Value'}
+                        </option>
+                      ))}
+                    </Select>
+
+                    <Select
+                      label="Related Lead"
+                      name="related_to_lead_c"
+                      value={formData.related_to_lead_c}
+                      onChange={handleChange}
+                      disabled={loadingLookups}
+                    >
+                      <option value="">Select Lead</option>
+                      {leads.map(lead => (
+                        <option key={lead.Id} value={lead.Id}>
+                          Lead {lead.Id} - {lead.status || 'No Status'} ({lead.score || 0}% Score)
+                        </option>
+                      ))}
+                    </Select>
+                  </div>
                 </div>
               </CardContent>
 
