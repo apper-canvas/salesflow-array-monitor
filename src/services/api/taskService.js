@@ -9,9 +9,6 @@ const apperClient = new ApperClient({
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-// Mock delay to simulate API calls
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
 class TaskService {
   constructor() {
     this.tableName = 'task_c';
