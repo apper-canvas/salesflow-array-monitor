@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from "react";
-import Layout from "@/components/organisms/Layout";
-import MetricCard from "@/components/molecules/MetricCard";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/atoms/Card";
-import ApperIcon from "@/components/ApperIcon";
-import Badge from "@/components/atoms/Badge";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
+import React, { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
 import { contactService } from "@/services/api/contactService";
 import { dealService } from "@/services/api/dealService";
 import { leadService } from "@/services/api/leadService";
 import { activityService } from "@/services/api/activityService";
 import { taskService } from "@/services/api/taskService";
-import { format, isThisMonth, parseISO, isBefore } from "date-fns";
+import { format, isBefore, isThisMonth, parseISO } from "date-fns";
 import Chart from "react-apexcharts";
+import ApperIcon from "@/components/ApperIcon";
+import Layout from "@/components/organisms/Layout";
+import MetricCard from "@/components/molecules/MetricCard";
+import Error from "@/components/ui/Error";
+import Loading from "@/components/ui/Loading";
+import Pipeline from "@/components/pages/Pipeline";
+import Badge from "@/components/atoms/Badge";
+import Button from "@/components/atoms/Button";
 
 const Dashboard = () => {
 const [metrics, setMetrics] = useState({
@@ -260,12 +262,23 @@ return (
             </CardContent>
           </Card>
 
-          {/* Recent Activities */}
+{/* Recent Activities */}
           <Card className="transform hover:scale-[1.02] transition-all duration-200">
             <CardHeader>
-              <CardTitle className="flex items-center">
-                <ApperIcon name="Activity" className="h-5 w-5 mr-2 text-primary-600" />
-                Recent Activities
+              <CardTitle className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <ApperIcon name="Activity" className="h-5 w-5 mr-2 text-primary-600" />
+                  Recent Activities
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => window.location.href = '/activities'}
+                  className="text-sm text-primary-600 hover:text-primary-700"
+                >
+                  View all
+                  <ApperIcon name="ArrowRight" className="h-4 w-4 ml-1" />
+                </Button>
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -300,6 +313,14 @@ return (
                   <div className="text-center py-8 text-gray-500">
                     <ApperIcon name="Activity" className="h-8 w-8 mx-auto mb-2 text-gray-400" />
                     <p className="text-sm">No recent activities</p>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => window.location.href = '/activities'}
+                      className="text-primary-600 hover:text-primary-700 mt-2"
+                    >
+                      Create your first activity
+                    </Button>
                   </div>
                 )}
               </div>

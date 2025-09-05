@@ -16,6 +16,7 @@ import Pipeline from "@/components/pages/Pipeline";
 import Deals from "@/components/pages/Deals";
 import Tasks from "@/components/pages/Tasks";
 import Notifications from "@/components/pages/Notifications";
+import Activities from "@/components/pages/Activities";
 export const AuthContext = createContext(null);
 
 function App() {
@@ -118,12 +119,13 @@ return (
         <Route path="/error" element={<ErrorPage />} />
         <Route path="/prompt-password/:appId/:emailAddress/:provider" element={<PromptPassword />} />
         <Route path="/reset-password/:appId/:fields" element={<ResetPassword />} />
-        <Route path="/" element={<Dashboard />} />
+<Route path="/" element={<Dashboard />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/leads" element={<Leads />} />
         <Route path="/pipeline" element={<Pipeline />} />
         <Route path="/deals" element={<Deals />} />
         <Route path="/tasks" element={<Tasks />} />
+        <Route path="/activities" element={<Activities />} />
         <Route path="/notifications" element={<Notifications />} />
       </Routes>
       
