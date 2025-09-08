@@ -20,7 +20,8 @@ const [formData, setFormData] = useState({
     related_to_deal_c: "",
     due_date_c: ""
   });
-  const [loading, setLoading] = useState(false);
+const [loading, setLoading] = useState(false);
+  const [generatingDescription, setGeneratingDescription] = useState(false);
   const [contacts, setContacts] = useState([]);
   const [deals, setDeals] = useState([]);
   const [leads, setLeads] = useState([]);
@@ -77,7 +78,7 @@ useEffect(() => {
     }
   }, [task]);
 
-  const handleSubmit = async (e) => {
+const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
@@ -100,7 +101,45 @@ useEffect(() => {
     }
   };
 
-  const handleChange = (e) => {
+  const handleGenerateDescription = async () => {
+    if (!formData.Name || formData.Name.trim().length === 0) {
+      toast.error("Please enter a task title first");
+      return;
+    }
+
+    setGeneratingDescription(true);
+    
+    try {
+      const response = await fetch(`${import.meta.env.VITE_APPER_API_BASE_URL || 'https://test-api.apper.io'}/fn/${import.meta.env.VITE_GENERATE_TASK_DESCRIPTION}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title: formData.Name
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.success && result.description) {
+        setFormData(prev => ({ 
+          ...prev, 
+          description_c: result.description 
+        }));
+        toast.success("Description generated successfully");
+      } else {
+        toast.error(result.error || "Failed to generate description");
+      }
+    } catch (error) {
+      console.error('Error generating description:', error);
+      toast.error("Failed to generate description. Please try again.");
+    } finally {
+      setGeneratingDescription(false);
+    }
+  };
+
+const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -146,14 +185,39 @@ useEffect(() => {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Description
                   </label>
-<textarea
+<div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-gray-700">Description</span>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={handleGenerateDescription}
+                      disabled={generatingDescription || !formData.Name}
+                      className="text-xs px-2 py-1 h-7"
+                    >
+                      {generatingDescription ? (
+                        <>
+                          <ApperIcon name="Loader2" size={12} className="mr-1 animate-spin" />
+                          Generating...
+                        </>
+                      ) : (
+                        <>
+                          <ApperIcon name="Sparkles" size={12} className="mr-1" />
+                          Generate Description
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  <textarea
                     name="description_c"
                     value={formData.description_c}
                     onChange={handleChange}
                     rows={3}
                     className="flex w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200"
-                    placeholder="Enter task description"
+                    placeholder="Enter task description or generate one using AI"
                   />
+                </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
