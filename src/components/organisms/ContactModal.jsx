@@ -2,31 +2,51 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/atoms/Card";
 import { contactService } from "@/services/api/contactService";
+import { companyService } from "@/services/api/companyService";
 import ApperIcon from "@/components/ApperIcon";
 import Input from "@/components/atoms/Input";
+import Select from "@/components/atoms/Select";
 import Button from "@/components/atoms/Button";
 import FileUpload from "@/components/molecules/FileUpload";
 import AttachmentList from "@/components/molecules/AttachmentList";
-
 const ContactModal = ({ isOpen, onClose, contact, onSave }) => {
-  const [formData, setFormData] = useState({
-name: "",
+const [formData, setFormData] = useState({
+    name: "",
     email: "",
     phone: "",
-    company: "",
+    company: null,
     tags: "",
     notes: ""
   });
+  const [companies, setCompanies] = useState([]);
+  const [loadingCompanies, setLoadingCompanies] = useState(false);
   const [attachmentRefresh, setAttachmentRefresh] = useState(0);
-  const [loading, setLoading] = useState(false);
+const [loading, setLoading] = useState(false);
 
+  // Load companies for dropdown
   useEffect(() => {
-if (contact) {
+    const loadCompanies = async () => {
+      setLoadingCompanies(true);
+      try {
+        const companiesData = await companyService.getAll();
+        setCompanies(companiesData);
+      } catch (error) {
+        console.error('Error loading companies:', error);
+        toast.error('Failed to load companies');
+      } finally {
+        setLoadingCompanies(false);
+      }
+    };
+    
+    loadCompanies();
+  }, []);
+useEffect(() => {
+    if (contact) {
       setFormData({
         name: contact.name || "",
         email: contact.email || "",
         phone: contact.phone || "",
-        company: contact.company || "",
+        company: contact.company || null,
         tags: contact.tags ? contact.tags.join(", ") : "",
         notes: contact.notes || ""
       });
@@ -35,7 +55,7 @@ if (contact) {
         name: "",
         email: "",
         phone: "",
-        company: "",
+        company: null,
         tags: "",
         notes: ""
       });
@@ -72,7 +92,14 @@ if (contact) {
 
 const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    if (name === 'company') {
+      // Find the selected company object
+      const selectedCompany = companies.find(company => company.Id === parseInt(value));
+      setFormData(prev => ({ ...prev, [name]: selectedCompany || null }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleAttachmentUpload = () => {
@@ -137,13 +164,20 @@ const handleChange = (e) => {
                     placeholder="Enter phone number"
                   />
 
-                  <Input
+<Select
                     label="Company"
                     name="company"
-                    value={formData.company}
+                    value={formData.company?.Id || ''}
                     onChange={handleChange}
-                    placeholder="Enter company name"
-                  />
+                    disabled={loadingCompanies}
+                  >
+                    <option value="">Select a company...</option>
+                    {companies.map((company) => (
+                      <option key={company.Id} value={company.Id}>
+                        {company.name}
+                      </option>
+                    ))}
+                  </Select>
                 </div>
 
                 <Input

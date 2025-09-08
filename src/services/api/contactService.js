@@ -22,7 +22,7 @@ class ContactService {
       if (!this.apperClient) this.initializeClient();
       
       const params = {
-        fields: [
+fields: [
           {"field": {"Name": "Id"}},
           {"field": {"Name": "Name"}},
           {"field": {"Name": "name_c"}},
@@ -51,10 +51,10 @@ class ContactService {
 
       return response.data.map(contact => ({
         Id: contact.Id,
-        name: contact.name_c || contact.Name || '',
+name: contact.name_c || contact.Name || '',
         email: contact.email_c || '',
         phone: contact.phone_c || '',
-        company: contact.company_c || '',
+        company: contact.company_c || null,
         tags: contact.tags_c ? contact.tags_c.split(',').map(tag => tag.trim()) : [],
         notes: contact.notes_c || '',
         lastContactedAt: contact.last_contacted_at_c || null,
@@ -70,7 +70,7 @@ class ContactService {
     try {
       if (!this.apperClient) this.initializeClient();
       
-      const params = {
+const params = {
         fields: [
           {"field": {"Name": "Id"}},
           {"field": {"Name": "Name"}},
@@ -92,12 +92,12 @@ class ContactService {
       }
 
       const contact = response.data;
-      return {
+return {
         Id: contact.Id,
         name: contact.name_c || contact.Name || '',
         email: contact.email_c || '',
         phone: contact.phone_c || '',
-        company: contact.company_c || '',
+        company: contact.company_c || null,
         tags: contact.tags_c ? contact.tags_c.split(',').map(tag => tag.trim()) : [],
         notes: contact.notes_c || '',
         lastContactedAt: contact.last_contacted_at_c || null,
@@ -113,13 +113,13 @@ class ContactService {
     try {
       if (!this.apperClient) this.initializeClient();
       
-      const params = {
+const params = {
         records: [{
           Name: contactData.name || '',
           name_c: contactData.name || '',
           email_c: contactData.email || '',
           phone_c: contactData.phone || '',
-          company_c: contactData.company || '',
+          company_c: contactData.company?.Id || null,
           tags_c: Array.isArray(contactData.tags) ? contactData.tags.join(',') : (contactData.tags || ''),
           notes_c: contactData.notes || '',
           last_contacted_at_c: contactData.lastContactedAt || null
@@ -151,9 +151,9 @@ class ContactService {
           return {
             Id: createdContact.Id,
             name: createdContact.name_c || createdContact.Name || '',
-            email: createdContact.email_c || '',
+email: createdContact.email_c || '',
             phone: createdContact.phone_c || '',
-            company: createdContact.company_c || '',
+            company: createdContact.company_c || null,
             tags: createdContact.tags_c ? createdContact.tags_c.split(',').map(tag => tag.trim()) : [],
             notes: createdContact.notes_c || '',
             lastContactedAt: createdContact.last_contacted_at_c || null,
@@ -174,13 +174,13 @@ class ContactService {
       if (!this.apperClient) this.initializeClient();
       
       const params = {
-        records: [{
+records: [{
           Id: parseInt(id),
           Name: contactData.name || '',
           name_c: contactData.name || '',
           email_c: contactData.email || '',
           phone_c: contactData.phone || '',
-          company_c: contactData.company || '',
+          company_c: contactData.company?.Id || null,
           tags_c: Array.isArray(contactData.tags) ? contactData.tags.join(',') : (contactData.tags || ''),
           notes_c: contactData.notes || '',
           last_contacted_at_c: contactData.lastContactedAt || null
@@ -212,9 +212,9 @@ class ContactService {
           return {
             Id: updatedContact.Id,
             name: updatedContact.name_c || updatedContact.Name || '',
-            email: updatedContact.email_c || '',
+email: updatedContact.email_c || '',
             phone: updatedContact.phone_c || '',
-            company: updatedContact.company_c || '',
+            company: updatedContact.company_c || null,
             tags: updatedContact.tags_c ? updatedContact.tags_c.split(',').map(tag => tag.trim()) : [],
             notes: updatedContact.notes_c || '',
             lastContactedAt: updatedContact.last_contacted_at_c || null,
