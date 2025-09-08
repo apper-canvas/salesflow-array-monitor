@@ -9,6 +9,7 @@ import Select from "@/components/atoms/Select";
 import Button from "@/components/atoms/Button";
 import FileUpload from "@/components/molecules/FileUpload";
 import AttachmentList from "@/components/molecules/AttachmentList";
+import DealComments from "./DealComments";
 
 const DealModal = ({ isOpen, onClose, deal, onSave }) => {
   const [formData, setFormData] = useState({
@@ -231,6 +232,11 @@ const handleChange = (e) => {
                     />
                   </div>
                 </div>
+
+                {/* Comments Section */}
+                {deal?.Id && (
+                  <DealComments dealId={deal.Id} />
+                )}
 
               </CardContent>
 
