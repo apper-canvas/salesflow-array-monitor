@@ -110,7 +110,7 @@ const handleSubmit = async (e) => {
     setGeneratingDescription(true);
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_APPER_API_BASE_URL || 'https://test-api.apper.io'}/fn/${import.meta.env.VITE_GENERATE_TASK_DESCRIPTION}`, {
+      const response = await fetch(`${import.meta.env.VITE_APPER_API_BASE_URL || 'https://test-api.apper.io'}/fn/generate-task-description`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
