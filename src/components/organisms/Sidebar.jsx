@@ -5,6 +5,7 @@ import ApperIcon from "@/components/ApperIcon";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: "LayoutDashboard" },
+  { name: "Companies", href: "/companies", icon: "Building" },
   { name: "Contacts", href: "/contacts", icon: "Users" },
   { name: "Leads", href: "/leads", icon: "UserPlus" },
   { name: "Pipeline", href: "/pipeline", icon: "BarChart3" },

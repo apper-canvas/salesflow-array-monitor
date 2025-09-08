@@ -1,22 +1,23 @@
-import { createContext, useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { createContext, useEffect, useState } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import { setUser, clearUser } from './store/userSlice';
-import Login from '@/components/pages/Login';
-import Signup from '@/components/pages/Signup';
-import Callback from '@/components/pages/Callback';
-import ErrorPage from '@/components/pages/ErrorPage';
-import ResetPassword from '@/components/pages/ResetPassword';
-import PromptPassword from '@/components/pages/PromptPassword';
+import Companies from "@/components/pages/Companies";
+import { clearUser, setUser } from "@/store/userSlice";
+import Signup from "@/components/pages/Signup";
+import Callback from "@/components/pages/Callback";
+import Activities from "@/components/pages/Activities";
+import ResetPassword from "@/components/pages/ResetPassword";
+import ErrorPage from "@/components/pages/ErrorPage";
+import Notifications from "@/components/pages/Notifications";
 import Dashboard from "@/components/pages/Dashboard";
+import Login from "@/components/pages/Login";
 import Contacts from "@/components/pages/Contacts";
 import Leads from "@/components/pages/Leads";
-import Pipeline from "@/components/pages/Pipeline";
+import PromptPassword from "@/components/pages/PromptPassword";
 import Deals from "@/components/pages/Deals";
+import Pipeline from "@/components/pages/Pipeline";
 import Tasks from "@/components/pages/Tasks";
-import Notifications from "@/components/pages/Notifications";
-import Activities from "@/components/pages/Activities";
 export const AuthContext = createContext(null);
 
 function App() {
@@ -120,6 +121,13 @@ return (
         <Route path="/prompt-password/:appId/:emailAddress/:provider" element={<PromptPassword />} />
         <Route path="/reset-password/:appId/:fields" element={<ResetPassword />} />
 <Route path="/" element={<Dashboard />} />
+        <Route path="/contacts" element={<Contacts />} />
+        <Route path="/leads" element={<Leads />} />
+        <Route path="/pipeline" element={<Pipeline />} />
+        <Route path="/deals" element={<Deals />} />
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/activities" element={<Activities />} />
+<Route path="/companies" element={<Companies />} />
         <Route path="/contacts" element={<Contacts />} />
         <Route path="/leads" element={<Leads />} />
         <Route path="/pipeline" element={<Pipeline />} />
